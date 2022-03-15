@@ -8,38 +8,43 @@ import axios from 'axios';
 function App() {
 
 
-  const ftxApiKey = "ePC6V5kAbi65QAZGELS3b14SBHk36vNgkmTVhR3k";
- 
-  const ftx_secret_api = "_tYz_a2rK63VOqrBT7TUg4c2MGHXvjdF13rM6fZU";
+//aggregate off chain prices(eth hardcode).
+const [ftx_price, set_ftx_price] = useState(null);
+const [cb_price, set_cb_price] = useState(null);
+const [binance_price, set_binance_price] = useState(null);
 
-const [ftx_price, set_ftx_price] = useState({});
-// //will i need to authenticate accnt? 
-// //GET https://ftx.us/api/markets/{market_name}/orderbook?depth={depth}
-// useEffect(() => {
-//   fetch("https://ftx.us/api/markets/ETH/USD/orderbook?depth=3")
-//   .then(response =>
-//     response.json())
-//   .then(data => set_ftx_price(data.message))
-// },[])
 
+//all hardcoded to eth. fetch price data from top 3 off chain pi's
 useEffect(async() =>{
-  const ax = axios;
-  ax.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-const result = await ax.get("https://ftx.us/api/markets",{ crossDomain: true });
-console.log("ater async call")
-set_ftx_price(result);
+const fetchData = async() => {
+  //ftx
+  const ftx_response = await fetch("https://ftx.us/api/markets/eth/usd");
+  const ftx_json = await ftx_response.json();
+  set_ftx_price(ftx_json.result.price);
+
+  //coinbase
+  const cb_response = await fetch("https://api.coinbase.com/v2/prices/ETH-USD/spot");
+     const cb_json = await cb_response.json();
+     set_cb_price(cb_json.data.amount);
+
+  //binance
+
+  const binance_response = await fetch("https://api.binance.us/api/v3/ticker/price?symbol=ETHUSD");
+  const binance_json = await binance_response.json();
+  set_binance_price(binance_json.price);
+
+}
+fetchData();
 });
 
-console.log("after useeffect ftx_price: " + ftx_price);
 
-//console.log("OBJECT" + this.state.ftx_price);
 
   return (
     
     <ChakraProvider className="App">
    
       <Header className="App-header" />
-        <Text className="Sub-Header"  bg="#CCCC99" fontSize='25px' align="center"> 
+        <Text className="Sub-Header"  bg="#FFEBCD" fontSize='25px' align="center"> 
         Aggregator
         </Text>
       <Flex
@@ -48,12 +53,15 @@ console.log("after useeffect ftx_price: " + ftx_price);
       justify="space-between"
       wrap="wrap"
       padding={320}
-      bg="#CCCC99"
+      bg="#FFEBCD"
       color="black"
       className="App"
      
       >
-   <PriceInfo>
+   <PriceInfo ftx_price = {ftx_price} 
+   cb_price = {cb_price} 
+   binance_price = {binance_price}
+   >
             
             </PriceInfo>
 
