@@ -7,16 +7,16 @@ import { Button,Flex, Container,Box,
     
     export default function PriceInfo(
         {
-            ftx_price,
-            cb_price,
-            binance_price,
+            type,
+            price_array,
         }
        
     ){
 
-        //TODO cut off after 3 decimals
-        const avg_eth = ((parseFloat(ftx_price) + parseFloat(cb_price) + parseFloat(binance_price)) / 3.0).toFixed(2);
-console.log( parseFloat(ftx_price) + parseFloat(cb_price));
+        //still hard coded, would have to do map or iteration otherwise
+        const avg_eth = ((parseFloat(price_array[0]) + parseFloat(price_array[1])
+         + parseFloat(price_array[2])) / 3.0).toFixed(2);
+
         //will contain 2 PriceRow components
         //parent component to pricerow
     return(
@@ -26,10 +26,10 @@ console.log( parseFloat(ftx_price) + parseFloat(cb_price));
         <Stack >
     <Box w='300px' h='400px' borderWidth='4px' borderRadius='lg' overflow='hidden'>
     
-         <PriceRow ftx_price={ftx_price} 
-         cb_price = {cb_price}
-          binance_price = {binance_price}
+         <PriceRow 
           avg_eth_price={avg_eth}
+          type={type}
+          price_array={price_array}
           >
                 
         </PriceRow>

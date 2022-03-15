@@ -37,6 +37,10 @@ const fetchData = async() => {
 fetchData();
 });
 
+//would need to make this a map if i needed to know what price where.
+//not assuming 0=ftx, 1=binance, etc.
+//map ot something
+const off_chain_prices = [ftx_price, cb_price, binance_price];
 
 
   return (
@@ -58,11 +62,12 @@ fetchData();
       className="App"
      
       >
-   <PriceInfo ftx_price = {ftx_price} 
-   cb_price = {cb_price} 
-   binance_price = {binance_price}
+
+  <PriceInfo 
+  price_array={off_chain_prices}
+   type={"On Chain Data"}
    >
-            
+    
             </PriceInfo>
 
 
