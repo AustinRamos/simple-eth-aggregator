@@ -14,9 +14,9 @@ import { Button,Flex, Container,Box,
     ){
 
         //still hard coded, would have to do map or iteration otherwise
-        const avg_eth = ((parseFloat(price_array[0]) + parseFloat(price_array[1])
-         + parseFloat(price_array[2])) / 3.0).toFixed(2);
-
+        const avg_eth = (((parseFloat(price_array[0])+ parseFloat(price_array[1])
+         + parseFloat(price_array[2]))) / 3.0).toFixed(2);
+         
         //will contain 2 PriceRow components
         //parent component to pricerow
     return(

@@ -20,27 +20,29 @@ const fetchData = async() => {
   //ftx
   const ftx_response = await fetch("https://ftx.us/api/markets/eth/usd");
   const ftx_json = await ftx_response.json();
-  set_ftx_price(ftx_json.result.price);
+  set_ftx_price(parseFloat(ftx_json.result.price).toFixed(2));
 
   //coinbase
   const cb_response = await fetch("https://api.coinbase.com/v2/prices/ETH-USD/spot");
      const cb_json = await cb_response.json();
-     set_cb_price(cb_json.data.amount);
+     set_cb_price(parseFloat(cb_json.data.amount).toFixed(2));
 
   //binance
 
   const binance_response = await fetch("https://api.binance.us/api/v3/ticker/price?symbol=ETHUSD");
   const binance_json = await binance_response.json();
-  set_binance_price(binance_json.price);
+  set_binance_price(parseFloat(binance_json.price).toFixed(2));
 
 }
+
 fetchData();
+
 });
 
 //would need to make this a map if i needed to know what price where.
 //not assuming 0=ftx, 1=binance, etc.
 //map ot something
-const off_chain_prices = [ftx_price, cb_price, binance_price];
+const off_chain_prices = [parseFloat(ftx_price).toFixed(2), parseFloat(cb_price).toFixed(2), parseFloat(binance_price)];
 
 
   return (
