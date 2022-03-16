@@ -25,7 +25,7 @@ import { Button,Flex, Container,Box,
     <div>
 
         <Stack >
-    <Box w='300px' h='400px' borderWidth='4px' borderRadius='lg' overflow='hidden'>
+    <Box  borderWidth='4px' borderRadius='md' overflow='hidden'>
     
          <PriceRow 
           avg_eth_price={avg_eth}

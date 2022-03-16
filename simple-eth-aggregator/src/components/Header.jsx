@@ -7,6 +7,8 @@ import {
     Button,
     useDisclosure
   } from "@chakra-ui/react";
+  import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+  
 import React from "react";
 
 // displays a page header
@@ -29,11 +31,36 @@ export default function Header() {
           Aggregator
         </Heading>
       </Flex>
-    {/*<a href="/" /*target="_blank" rel="noopener noreferrer"*
+
+      {/* <Flex>
+      <a href="/" target="_blank" rel="noopener noreferrer">
      <Heading as='h4' size='md'>
-        TEST
+        Price Aggregator
      </Heading>
-   {/*</a>*/}
+   </a>
+   <a href="/" target="_blank" rel="noopener noreferrer">
+     <Heading as='h4' size='md'>
+        Lending Pools
+     </Heading>
+   </a>
+      </Flex> */}
+
+      <Tabs variant='soft-rounded' colorScheme='green'>
+  <TabList>
+    <Tab>Price Aggregator</Tab>
+    <Tab>Lending Pools </Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
+      <p>one!</p>
+    </TabPanel>
+    <TabPanel>
+      <p>two!</p>
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+    
     </Flex>
+
   );
 }

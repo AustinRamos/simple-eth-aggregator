@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import { Button,Flex, Container,Box, ChakraProvider, Center,Text} from "@chakra-ui/react"
 import './App.css';
-import {Header,PriceInfo} from "./components"
+import {Header,PriceInfo, Footer} from "./components"
 import {useState , useEffect} from "react"
 import axios from 'axios';
 
@@ -89,15 +89,15 @@ const on_chain_prices = [1,2,crv_price];
     <ChakraProvider className="App">
    
       <Header className="App-header" />
-        <Text className="Sub-Header"  bg="#FFEBCD" fontSize='25px' align="center"> 
-        Aggregator
+      <Text className="Sub-Header"  bg="#FFEBCD" fontSize='25px' align="center"> 
+        Price Aggregator
         </Text>
       <Flex
       as="nav"
       align="center"
       justify="space-between"
       wrap="wrap"
-      padding={320}
+      padding={200}
       bg="#FFEBCD"
       color="black"
       className="App"
@@ -125,6 +125,7 @@ const on_chain_prices = [1,2,crv_price];
 
       </Flex>
  
+<Footer > </Footer>
 
     </ChakraProvider>
 
