@@ -4,9 +4,40 @@ import './App.css';
 import {Header,PriceInfo, Footer} from "./components"
 import {useState , useEffect} from "react"
 import axios from 'axios';
+import { ApolloClient } from "apollo-client";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+
+const DAI_QUERY = gql
+`query tokens($tokenAddress: Bytes!) {
+  tokens(where: { id: $tokenAddress }) {
+    derivedETH
+    totalLiquidity
+  }
+}`;
+
+const ETH_PRICE_QUERY = gql
+`query ethPrice {
+  bundle(id: "1") {
+    ethPrice
+  }
+}`;
+ 
+
+ //create appollo client for The Graph queries
+ export const client = new ApolloClient({
+  link: new HttpLink({
+    uri: "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2",
+  }),
+  cache: new InMemoryCache(),
+});
+
+
+
 
 function App() {
-
 
 //aggregate off chain prices(eth hardcode).
 const [ftx_price, set_ftx_price] = useState(null);
@@ -49,10 +80,10 @@ const fetchData = async() => {
   //********** */
 
   //sushi Eth/USDC pool
-  const sushi_rsp = await fetch("https://api2.sushipro.io/?chainID=1&action=get_pair&pair=0x397FF1542f962076d0BFE58eA045FfA2d347ACa0");
-  const sushi_rsp_json = await sushi_rsp.json();
+  // const sushi_rsp = await fetch("https://api2.sushipro.io/?chainID=1&action=get_pair&pair=0x397FF1542f962076d0BFE58eA045FfA2d347ACa0");
+  // const sushi_rsp_json = await sushi_rsp.json();
 
-  set_sushiEth_price(sushi_rsp_json);
+  // set_sushiEth_price(sushi_rsp_json);
   //set_sushiEth_price(parseFloat(sushi_rsp_json).toFixed(2));
  
 }//Token_1_price)
@@ -60,6 +91,41 @@ const fetchData = async() => {
 fetchData();
 
 });
+
+//seperate hook for uniswap graph query.
+//have to get usd price of dai to divide and find exact usd price of eth.
+const { loading, error, data: ethPriceData } = useQuery(ETH_PRICE_QUERY);
+const {
+  loading: daiLoading,
+  error: daiError,
+  data: daiData,
+} = useQuery(DAI_QUERY, {
+  variables: {
+    tokenAddress: "0x6b175474e89094c44da98b954eedeac495271d0f",
+  },
+});
+
+const daiPriceInEth = daiData && daiData.tokens[0].derivedETH;
+console.log("daiPriceInEth: " + daiPriceInEth);
+const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity;
+console.log("daiTotalLiquidity: " + daiTotalLiquidity);
+//console.log("ethPriceData: " + JSON.stringify(ethPriceData));
+const ethPriceInUSD = ethPriceData && ethPriceData.bundle.ethPrice;
+console.log("ethPriceInUSD: " + ethPriceInUSD);
+
+
+
+//**so nothing wrong with eth query itself(confirmed on subprahg explorer
+// and also dai queries work...
+//) */
+
+ //const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice;
+// console.log("error UNI: " + error);
+//  if(ethPriceData){
+//  console.log("ethPriceInUSD: " + ethPriceData.bundles);
+//  }
+
+
 
 // [{"Token_1_contract":"0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
 // "Token_1_symbol":"WBTC","Token_1_name":"Wrapped BTC","Token_1_reserve":1306.85155681,
@@ -76,7 +142,7 @@ fetchData();
 
 //have seperate useeffect for on chain, any diff at all? prolly not since all http get requests.
 
-console.log("sushi: " + JSON.stringify(sushiEth_price));
+//console.log("sushi: " + JSON.stringify(sushiEth_price));
 //console.log("sushi: " + sushiEth_price);
 //would need to make this a map if i needed to know what price where.
 //not assuming 0=ftx, 1=binance, etc.
