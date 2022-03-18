@@ -47,8 +47,22 @@ const [crv_price, set_crv_price] = useState(null);
 const [sushiEth_price, set_sushiEth_price] = useState(null);
 
 //all hardcoded to eth. fetch price data from top 3 off chain pi's
+//could do no await to make them see what happens?
 useEffect(async() =>{
 const fetchData = async() => {
+
+
+  //********** */
+
+  //sushi Eth/USDC pool
+  const sushi_rsp = await fetch("https://api2.sushipro.io/?chainID=1&action=get_pair&pair=0x397FF1542f962076d0BFE58eA045FfA2d347ACa0");
+  const sushi_rsp_json = await sushi_rsp.json();
+
+  set_sushiEth_price(JSON.stringify(sushi_rsp_json[0].Token_1_price));
+  //console.log(JSON.stringify(sushi_rsp_json));
+  //console.log(JSON.stringify(sushi_rsp_json[0].Token_1_price));
+ 
+
   //ftx
   const ftx_response = await fetch("https://ftx.us/api/markets/eth/usd");
   const ftx_json = await ftx_response.json();
@@ -77,20 +91,13 @@ const fetchData = async() => {
 
 
 
-  //********** */
-
-  //sushi Eth/USDC pool
-  // const sushi_rsp = await fetch("https://api2.sushipro.io/?chainID=1&action=get_pair&pair=0x397FF1542f962076d0BFE58eA045FfA2d347ACa0");
-  // const sushi_rsp_json = await sushi_rsp.json();
-
-  // set_sushiEth_price(sushi_rsp_json);
-  //set_sushiEth_price(parseFloat(sushi_rsp_json).toFixed(2));
- 
 }//Token_1_price)
 
 fetchData();
 
 });
+
+//console.log("*****OUTSIDE FETCHDATA: sushiEth_price: " + sushiEth_price);
 
 //seperate hook for uniswap graph query.
 //have to get usd price of dai to divide and find exact usd price of eth.
@@ -106,24 +113,15 @@ const {
 });
 
 const daiPriceInEth = daiData && daiData.tokens[0].derivedETH;
-console.log("daiPriceInEth: " + daiPriceInEth);
+//console.log("daiPriceInEth: " + daiPriceInEth);
 const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity;
-console.log("daiTotalLiquidity: " + daiTotalLiquidity);
+//console.log("daiTotalLiquidity: " + daiTotalLiquidity);
 //console.log("ethPriceData: " + JSON.stringify(ethPriceData));
 const ethPriceInUSD = ethPriceData && ethPriceData.bundle.ethPrice;
-console.log("ethPriceInUSD: " + ethPriceInUSD);
 
+//console.log("ethPriceInUSD: " + ethPriceInUSD);
 
-
-//**so nothing wrong with eth query itself(confirmed on subprahg explorer
-// and also dai queries work...
-//) */
-
- //const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice;
-// console.log("error UNI: " + error);
-//  if(ethPriceData){
-//  console.log("ethPriceInUSD: " + ethPriceData.bundles);
-//  }
+//parseFloat(ethPriceInUSD)).toFixed(2)
 
 
 
@@ -148,7 +146,7 @@ console.log("ethPriceInUSD: " + ethPriceInUSD);
 //not assuming 0=ftx, 1=binance, etc.
 //map ot something
 const off_chain_prices = [parseFloat(ftx_price).toFixed(2), parseFloat(cb_price).toFixed(2), parseFloat(binance_price)];
-const on_chain_prices = [1,2,crv_price];
+const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEth_price).toFixed(2),crv_price];
 
   return (
     
