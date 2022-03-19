@@ -17,7 +17,7 @@ return(
 
 <div>
 <Text as = "em" fontSize='2xl'>{isOffChain ? "Off Chain Data" : "On Chain Data"}</Text>
-<Flex>
+
 <List>
     <ListItem string = "test 1">
   <Box p='25' bg='#DEB887'>
@@ -41,7 +41,7 @@ return(
   </Box>
   </ListItem>
   </List>
-</Flex>
+
 </div>
 
 );

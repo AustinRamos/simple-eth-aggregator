@@ -20,7 +20,17 @@ export default function PriceAggregator(
     console.log("off_chain_prices: " + off_chain_prices);
   return (
       
-     <div>
+    <Flex
+    as="nav"
+    align="center"
+    justify="space-between"
+    wrap="wrap"
+    padding={200}
+    bg="#FFEBCD"
+    color="black"
+    className="App"
+   
+    >
   <PriceInfo 
   price_array={price_arrays[0]}
    isOffChain={true}
@@ -36,7 +46,7 @@ export default function PriceAggregator(
    >
     
             </PriceInfo>
-</div>
+</Flex>
 
   );
 }

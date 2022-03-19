@@ -87,17 +87,11 @@ const fetchData = async() => {
 
   //uni thegraph protocol
 
-
-
-
-
-}//Token_1_price)
-
+}
 fetchData();
 
 });
 
-//console.log("*****OUTSIDE FETCHDATA: sushiEth_price: " + sushiEth_price);
 
 //seperate hook for uniswap graph query.
 //have to get usd price of dai to divide and find exact usd price of eth.
@@ -113,38 +107,11 @@ const {
 });
 
 const daiPriceInEth = daiData && daiData.tokens[0].derivedETH;
-//console.log("daiPriceInEth: " + daiPriceInEth);
 const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity;
-//console.log("daiTotalLiquidity: " + daiTotalLiquidity);
-//console.log("ethPriceData: " + JSON.stringify(ethPriceData));
 const ethPriceInUSD = ethPriceData && ethPriceData.bundle.ethPrice;
 
-//console.log("ethPriceInUSD: " + ethPriceInUSD);
-
-//parseFloat(ethPriceInUSD)).toFixed(2)
 
 
-
-// [{"Token_1_contract":"0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-// "Token_1_symbol":"WBTC","Token_1_name":"Wrapped BTC","Token_1_reserve":1306.85155681,
-// "Token_1_price":0.06679835677541675,"Token_1_decimals":8,
-// "Token_1_derivedETH":14.970428140352425,
-// "Token_2_contract":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-// "Token_2_symbol":"WETH","Token_2_name":"Wrapped Ether",
-// "Token_2_reserve":19564.127321331798,"Token_2_price":14.970428140352425,
-// "Token_2_decimals":18,"Token_2_derivedETH":1}]
-
-//https://api2.sushipro.io/?chainID=1&action=get_pair&pair=0xceff51756c56ceffca006cd410b03ffc46dd3a58
-
-//ethusddcd sushi 0x397FF1542f962076d0BFE58eA045FfA2d347ACa0
-
-//have seperate useeffect for on chain, any diff at all? prolly not since all http get requests.
-
-//console.log("sushi: " + JSON.stringify(sushiEth_price));
-//console.log("sushi: " + sushiEth_price);
-//would need to make this a map if i needed to know what price where.
-//not assuming 0=ftx, 1=binance, etc.
-//map ot something
 const off_chain_prices = [parseFloat(ftx_price).toFixed(2), parseFloat(cb_price).toFixed(2), parseFloat(binance_price)];
 const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEth_price).toFixed(2),crv_price];
 
@@ -168,17 +135,12 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
      
       >
 
-      {/* hmm, perhaps will need an array of source amnd price arrays...  and to iterate thgout
-      in render methof. for src and price arrays... 
-      
-    ******START HERE */}
-
      <PriceAggregator
             off_chain_prices={off_chain_prices}
             on_chain_prices={on_chain_prices}
             src_arrays= {[["FTX", "Coinbase", "Binance"], ["Uniswap", "Sushi", "Curve"]]}
             price_arrays={[off_chain_prices, on_chain_prices]}
-              />
+      />
  
 
    {/* <PriceInfo 
