@@ -168,19 +168,20 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
      
       >
 
-      {/*hmm, perhaps will need an array of source amnd price arrays...  and to iterate thgout
+      {/* hmm, perhaps will need an array of source amnd price arrays...  and to iterate thgout
       in render methof. for src and price arrays... 
       
-    ******START HERE
+    ******START HERE */}
 
-*      <PriceAggregator
+     <PriceAggregator
             off_chain_prices={off_chain_prices}
             on_chain_prices={on_chain_prices}
-
+            src_arrays= {[["FTX", "Coinbase", "Binance"], ["Uniswap", "Sushi", "Curve"]]}
+            price_arrays={[off_chain_prices, on_chain_prices]}
               />
-  */}
+ 
 
-   <PriceInfo 
+   {/* <PriceInfo 
   price_array={off_chain_prices}
    isOffChain={true}
    src_array={["FTX","Coinbase", "Binance"]}
@@ -196,7 +197,7 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
   src_array={["Uniswap","Sushi", "Curve"]}
    >
     
-            </PriceInfo> 
+            </PriceInfo>  */}
 
 
       </Flex>

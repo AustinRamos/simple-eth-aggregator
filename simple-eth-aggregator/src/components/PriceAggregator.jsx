@@ -1,38 +1,42 @@
 import React from "react";
+import { Button,Flex, Container,Box, 
+    ChakraProvider, Spacer,Stack, Center,Text} from "@chakra-ui/react"
 import PriceInfo from "./PriceInfo";
 
 // displays a page header
 
 export default function PriceAggregator(
     {
-        PriceInfo,
+        
         off_chain_prices,
         on_chain_prices,
-        src_array,
-        price_array
+        src_arrays,
+        price_arrays
     }
 ) {
+
+    console.log("src_arrays: " + src_arrays[1]);
+    console.log("price_arrays: " + price_arrays);
+    console.log("off_chain_prices: " + off_chain_prices);
   return (
-      <div>
+      
+     <div>
   <PriceInfo 
-  price_array={off_chain_prices}
+  price_array={price_arrays[0]}
    isOffChain={true}
-   src_array={src_array}
+   src_array={src_arrays[0]}
    >
     
             </PriceInfo>
 
-
-{/* I WANT THESE TO BE SIDE BY SIDE */}
             <PriceInfo 
-  price_array={on_chain_prices}
+  price_array={price_arrays[1]}
   isOffChain={false}
-  src_array={["Uniswap","Sushi", "Curve"]}
+  src_array={src_arrays[1]}
    >
     
             </PriceInfo>
+</div>
 
-
-      </div>
   );
 }
