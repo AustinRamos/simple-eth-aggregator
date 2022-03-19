@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import { Button,Flex, Container,Box, ChakraProvider, Center,Text} from "@chakra-ui/react"
 import './App.css';
-import {Header,PriceInfo, Footer} from "./components"
+import {Header,PriceInfo, Footer,PriceAggregator} from "./components"
 import {useState , useEffect} from "react"
 import axios from 'axios';
 import { ApolloClient } from "apollo-client";
@@ -168,7 +168,19 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
      
       >
 
-  <PriceInfo 
+      {/*hmm, perhaps will need an array of source amnd price arrays...  and to iterate thgout
+      in render methof. for src and price arrays... 
+      
+    ******START HERE
+
+*      <PriceAggregator
+            off_chain_prices={off_chain_prices}
+            on_chain_prices={on_chain_prices}
+
+              />
+  */}
+
+   <PriceInfo 
   price_array={off_chain_prices}
    isOffChain={true}
    src_array={["FTX","Coinbase", "Binance"]}
@@ -177,14 +189,14 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
             </PriceInfo>
 
 
-{/* I WANT THESE TO BE SIDE BY SIDE */}
+
             <PriceInfo 
   price_array={on_chain_prices}
   isOffChain={false}
   src_array={["Uniswap","Sushi", "Curve"]}
    >
     
-            </PriceInfo>
+            </PriceInfo> 
 
 
       </Flex>

@@ -7,7 +7,10 @@ import { Button,Flex, Container,Box,
     
     export default function PriceInfo(
         {
+            //some of thse are not necessary... 
             isOffChain,
+            off_chain_prices,
+            on_chain_prices,
             price_array,
             src_array,
         }
