@@ -9,6 +9,17 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import { Link, Route, Switch, useLocation } from "react-router-dom";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react'
 
 const DAI_QUERY = gql
 `query tokens($tokenAddress: Bytes!) {
@@ -38,6 +49,8 @@ const ETH_PRICE_QUERY = gql
 
 
 function App() {
+
+  const location = useLocation();
 
 //aggregate off chain prices(eth hardcode).
 const [ftx_price, set_ftx_price] = useState(null);
@@ -120,6 +133,16 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
     <ChakraProvider className="App">
    
       <Header className="App-header" />
+{/*selectedKeys={[location.pathname]}*/}
+      <Menu style={{ textAlign: "center", marginTop: 40 }}  mode="horizontal">
+        <MenuItem key="/">
+          <Link to="/">Home</Link>
+        </MenuItem>
+        <MenuItem key="/debug">
+          <Link to="/lending">Lending</Link>
+          </MenuItem>
+      </Menu>
+
       <Text className="Sub-Header"  bg="#FFEBCD" fontSize='25px' align="center"> 
         Price Aggregator
         </Text>
@@ -141,25 +164,6 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
             src_arrays= {[["FTX", "Coinbase", "Binance"], ["Uniswap", "Sushi", "Curve"]]}
             price_arrays={[off_chain_prices, on_chain_prices]}
       />
- 
-
-   {/* <PriceInfo 
-  price_array={off_chain_prices}
-   isOffChain={true}
-   src_array={["FTX","Coinbase", "Binance"]}
-   >
-    
-            </PriceInfo>
-
-
-
-            <PriceInfo 
-  price_array={on_chain_prices}
-  isOffChain={false}
-  src_array={["Uniswap","Sushi", "Curve"]}
-   >
-    
-            </PriceInfo>  */}
 
 
       </Flex>

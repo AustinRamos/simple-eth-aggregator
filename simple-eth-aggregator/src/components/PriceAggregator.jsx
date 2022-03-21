@@ -19,17 +19,8 @@ export default function PriceAggregator(
     console.log("price_arrays: " + price_arrays);
     console.log("off_chain_prices: " + off_chain_prices);
   return (
-      
+      //simply don't understand the flex thing... 
     <Flex
-    as="nav"
-    align="center"
-    justify="space-between"
-    wrap="wrap"
-    padding={200}
-    bg="#FFEBCD"
-    color="black"
-    className="App"
-   
     >
   <PriceInfo 
   price_array={price_arrays[0]}
