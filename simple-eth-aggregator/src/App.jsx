@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import { Button,Flex, Container,Box, ChakraProvider, Center,Text} from "@chakra-ui/react"
 import './App.css';
-import {Header,PriceInfo, Footer,PriceAggregator} from "./components"
+import {Header,PriceInfo, Footer,PriceAggregator, LendingInfo} from "./components"
 import {useState , useEffect} from "react"
 import axios from 'axios';
 import { ApolloClient } from "apollo-client";
@@ -9,7 +9,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import { Link, Route, Switch, useLocation } from "react-router-dom";
+import { Link, Route,Routes, Switch, useLocation } from "react-router-dom";
 import {
   Menu,
   MenuButton,
@@ -134,18 +134,8 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
    
       <Header className="App-header" />
 {/*selectedKeys={[location.pathname]}*/}
-      <Menu style={{ textAlign: "center", marginTop: 40 }}  mode="horizontal">
-        <MenuItem key="/">
-          <Link to="/">Home</Link>
-        </MenuItem>
-        <MenuItem key="/debug">
-          <Link to="/lending">Lending</Link>
-          </MenuItem>
-      </Menu>
+   
 
-      <Text className="Sub-Header"  bg="#FFEBCD" fontSize='25px' align="center"> 
-        Price Aggregator
-        </Text>
       <Flex
       as="nav"
       align="center"
@@ -158,12 +148,26 @@ const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEt
      
       >
 
-     <PriceAggregator
+
+<Switch>
+        <Route exact path="/">
+           <PriceAggregator
             off_chain_prices={off_chain_prices}
             on_chain_prices={on_chain_prices}
             src_arrays= {[["FTX", "Coinbase", "Binance"], ["Uniswap", "Sushi", "Curve"]]}
             price_arrays={[off_chain_prices, on_chain_prices]}
-      />
+           />
+        </Route>
+
+        <Route path="/lending">
+          <LendingInfo>
+
+          </LendingInfo>
+        </Route>
+
+        </Switch>
+
+   
 
 
       </Flex>

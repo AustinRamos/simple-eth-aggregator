@@ -5,8 +5,14 @@ import {
     Flex,
     Text,
     Button,
-    useDisclosure
+    useDisclosure,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
   } from "@chakra-ui/react";
+  import { Link, Route, Switch, useLocation } from "react-router-dom";
+
   import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
   
 import React from "react";
@@ -44,21 +50,32 @@ export default function Header() {
      </Heading>
    </a>
       </Flex> */}
+      <Menu style={{ textAlign: "center", marginTop: 40 }}  mode="horizontal" variant='soft-rounded' colorScheme='green'>
+        <MenuItem key="/">
+          <Link to="/">Home</Link>
+        </MenuItem>
+        <MenuItem key="/lending">
+          <Link to="/lending">Lending</Link>
+          </MenuItem>
+      </Menu>
 
-      <Tabs variant='soft-rounded' colorScheme='green'>
+
+      {/*
+      UGH i really like the way thuis looks but dont understand how to route via tabs.
+       <Tabs variant='soft-rounded' colorScheme='green'>
   <TabList>
     <Tab>Price Aggregator</Tab>
     <Tab>Lending Pools </Tab>
   </TabList>
   <TabPanels>
-    <TabPanel>
-      <p>one!</p>
+    <TabPanel key="/">
+    <Link to="/">/</Link>
     </TabPanel>
-    <TabPanel>
-      <p>two!</p>
+    <TabPanel key="/lending">
+    <Link to="/lending">/lending</Link>
     </TabPanel>
   </TabPanels>
-</Tabs>
+</Tabs> */}
     
     </Flex>
 
