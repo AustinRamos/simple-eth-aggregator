@@ -15,9 +15,9 @@ export default function PriceAggregator(
     }
 ) {
 
-    console.log("src_arrays: " + src_arrays[1]);
-    console.log("price_arrays: " + price_arrays);
-    console.log("off_chain_prices: " + off_chain_prices);
+    // console.log("src_arrays: " + src_arrays[1]);
+    // console.log("price_arrays: " + price_arrays);
+    // console.log("off_chain_prices: " + off_chain_prices);
   return (
       //simply don't understand the flex thing... 
     <Flex>
