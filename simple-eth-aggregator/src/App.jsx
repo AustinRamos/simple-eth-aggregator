@@ -106,6 +106,52 @@ fetchData();
 });
 
 
+//simply using a diff hook for lending liq. 
+useEffect(async() =>{
+  const fetchData = async() => {
+  
+  
+    //********** */
+  
+    //sushi Eth/USDC pool
+    const sushi_rsp = await fetch("https://api2.sushipro.io/?chainID=1&action=get_pair&pair=0x397FF1542f962076d0BFE58eA045FfA2d347ACa0");
+    const sushi_rsp_json = await sushi_rsp.json();
+  
+    set_sushiEth_price(JSON.stringify(sushi_rsp_json[0].Token_1_price));
+    //console.log(JSON.stringify(sushi_rsp_json));
+    //console.log(JSON.stringify(sushi_rsp_json[0].Token_1_price));
+   
+  
+    //ftx
+    const ftx_response = await fetch("https://ftx.us/api/markets/eth/usd");
+    const ftx_json = await ftx_response.json();
+    set_ftx_price(parseFloat(ftx_json.result.price).toFixed(2));
+  
+    //coinbase
+    const cb_response = await fetch("https://api.coinbase.com/v2/prices/ETH-USD/spot");
+       const cb_json = await cb_response.json();
+       set_cb_price(parseFloat(cb_json.data.amount).toFixed(2));
+  
+    //binance
+  
+    const binance_response = await fetch("https://api.binance.us/api/v3/ticker/price?symbol=ETHUSD");
+    const binance_json = await binance_response.json();
+    set_binance_price(parseFloat(binance_json.price).toFixed(2));
+  
+    //curve (off chain..)
+    const crv_resp = await fetch("https://api.curve.fi/api/getETHprice");
+    const crv_resp_json = await crv_resp.json();
+    set_crv_price(parseFloat(crv_resp_json.data.price).toFixed(2));
+    //set_crv_price(crv_resp_json.data.price);
+  
+    //uni thegraph protocol
+  
+  }
+  fetchData();
+  
+  });
+
+
 //seperate hook for uniswap graph query.
 //have to get usd price of dai to divide and find exact usd price of eth.
 const { loading, error, data: ethPriceData } = useQuery(ETH_PRICE_QUERY);
@@ -127,6 +173,40 @@ const ethPriceInUSD = ethPriceData && ethPriceData.bundle.ethPrice;
 
 const off_chain_prices = [parseFloat(ftx_price).toFixed(2), parseFloat(cb_price).toFixed(2), parseFloat(binance_price)];
 const on_chain_prices = [parseFloat(ethPriceInUSD).toFixed(2),parseFloat(sushiEth_price).toFixed(2),crv_price];
+
+
+const [ftx_lending_info, set_ftx_lending_info] = useState(null);
+
+//LENDING HOOK AND INFO
+
+useEffect(async() =>{
+  const fetchData = async() => {
+  
+    //off chain, ftx,  binance. (not coinbase)
+ //ftx
+ const ftx_response = await fetch("https://ftx.us/api//spot_margin/history");
+ const ftx_json = await ftx_response.json();
+ const filtered_resp = (ftx_json.result).filter(resp =>{
+return resp.coin=="ETH";
+ });
+
+
+ //RETURNS array of 8 objects, 1 for each hour in the 8 hr cycle showing volume and rate. 
+ //maybe average this? or say 8 hour volume total at avg rate?
+ console.log("FTX LENDING: " +JSON.stringify(filtered_resp ));
+ //set_ftx_price(parseFloat(ftx_json.result.price).toFixed(2));
+  
+    //on chain: aave, mkr, compound
+    
+    }
+    fetchData();
+    
+    });
+    
+
+
+
+
 
   return (
     
