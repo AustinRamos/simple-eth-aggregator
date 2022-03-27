@@ -20,16 +20,19 @@ export default function PriceAggregator(
     // console.log("off_chain_prices: " + off_chain_prices);
   return (
       //simply don't understand the flex thing... 
+      <div>
+       <Text style={{ textAlign: "center", marginTop: -150, marginLeft: 300 }}  mode="horizontal" className="Sub-Header" 
+      bg="#FFEBCD" fontSize='25px' align="top"> 
+ Price Aggregator
+ </Text>
     <Flex>
-<Text style={{ textAlign: "center", marginTop: -180 }}  mode="horizontal" className="Sub-Header"  bg="#FFEBCD" fontSize='25px' align="top"> 
-        Price Aggregator
-        </Text>
+
     <Flex
       as="nav"
       align="top"
       justify="space-between"
       wrap="wrap"
-      padding={200}
+      padding={50}
       bg="#FFEBCD"
       color="black"
     
@@ -57,6 +60,7 @@ export default function PriceAggregator(
         <Spacer></Spacer>
   
 </Flex>
+</div>
 
   );
 }
