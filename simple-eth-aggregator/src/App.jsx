@@ -240,7 +240,9 @@ return resp.coin=="ETH";
         </Route>
 
         <Route path="/lending">
-          <LendingInfo>
+          <LendingInfo
+          
+          >
 
           </LendingInfo>
         </Route>

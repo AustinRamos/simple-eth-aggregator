@@ -5,7 +5,7 @@ import PriceInfo from "./PriceInfo";
 
 // displays a page header
 
-export default function PriceAggregator(
+export default function LendingInfo(
     {
         
         off_chain_prices,
