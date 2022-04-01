@@ -194,15 +194,28 @@ return resp.coin=="ETH";
  //RETURNS array of 8 objects, 1 for each hour in the 8 hr cycle showing volume and rate. 
  //maybe average this? or say 8 hour volume total at avg rate?
  console.log("FTX LENDING: " +JSON.stringify(filtered_resp ));
+ //console.log("FTX LENDING: " +JSON.parse(filtered_resp)[0]);
+ console.log("FTX LENDING.LENGTH*****: " +filtered_resp[0].size); //returns 8
  //set_ftx_price(parseFloat(ftx_json.result.price).toFixed(2));
-  
+ set_ftx_lending_info(filtered_resp);
     //on chain: aave, mkr, compound
     
     }
     fetchData();
     
     });
-    
+
+   // console.log("ftx_lending_info: " + ftx_lending_info[0]);
+
+
+    //does this need to be done in a hook?
+    const [eight_hr_vol, eight_hr_rate] = useState(null);
+  
+  //   eight_hr_vol = ftx_lending_info.reduce(function(sum,val){
+  //     return sum+val;
+  // }, 0) / 8.0;
+
+  // console.log("8HR VOL***: " + eight_hr_vol);
 
 
 
